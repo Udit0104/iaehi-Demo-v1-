@@ -655,7 +655,7 @@ export const questions = [
   {
     id: 43,
     category: 4,
-    qque: "In the last 4 months, for how many months, you could not talk to your parents/siblings?",
+    que: "In the last 4 months, for how many months, you could not talk to your parents/siblings?",
     queHindi: "पिछले 4 महीनों में, कितने महीनों तक आप अपने माता-पिता/भाई-बहनों से बात नहीं कर पाए?",
     opta: "0 months",
     optaHindi: "0 महीने",

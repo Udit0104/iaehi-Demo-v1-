@@ -208,7 +208,8 @@ export default function FormDialog({
 
   const submitHandle = async () => {
     if (!error) {
-      if (data.includes(email)) {
+      // Allow 'test@example.com' to submit multiple times
+      if (data.includes(email) && email !== "test@iaehi.com") {
         alert(
           language === "hi"
             ? t.alreadySubmitted
