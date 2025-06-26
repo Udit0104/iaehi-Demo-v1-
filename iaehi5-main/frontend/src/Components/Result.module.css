@@ -1,9 +1,13 @@
 .enterpageContainer {
   display: flex;
-  text-align: center;
-  padding-top: 5rem;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
 }
 
 .divItem {
@@ -14,32 +18,46 @@
   cursor: pointer;
 }
 
-.spanStyle{
-  color: #001f3f;
-  text-decoration: underline;
+.spanStyle {
+  color: #ffc815;
   cursor: pointer;
+  text-decoration: underline;
+  font-size: 1rem;
+  transition: color 0.3s;
+  word-break: break-word;
+}
+
+.spanStyle:hover {
+  color: #ffdb70;
 }
 
 .pic {
   position: absolute;
-  width: 20%;
+  width: 25%;
   height: auto;
   bottom: 0;
-  animation: fadeIn 1.5s; 
+  animation: fadeIn 1.5s;
 }
 
 .feedbackContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+  width: 100%;
+  max-width: 400px;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  padding: 1rem;
-  margin: 1rem;
+  padding: 1.5rem;
   animation: fadeIn 0.5s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .feedbackButtons {
   display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem;
   margin-top: 1rem;
 }
 
@@ -48,13 +66,60 @@
   100% { opacity: 1; }
 }
 
-@media only screen and (max-width: 600px) {
-  .pic {
-    width: 40%;    
-    bottom: 4rem;
+/* ✅ Extra Small Devices (phones < 600px) */
+@media (max-width: 600px) {
+  .enterpageContainer {
+    padding: 1.5rem 1rem;
   }
-  
+
+  .pic {
+    width: 50%;
+    bottom: 2rem;
+    left: 25%;
+  }
+
+  .spanStyle {
+    font-size: 1rem;
+  }
+
+  .feedbackContainer {
+    padding: 1rem;
+    margin: 1.5rem 0;
+    width: 90%;
+  }
+
   .feedbackButtons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .feedbackButtons button {
+    width: 100%; /* Full-width buttons on small screens */
+  }
+
+  h3, h4, h5, .MuiTypography-root {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* ✅ Medium Devices (tablets) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .pic {
+    width: 35%;
+    left: 32.5%;
+  }
+
+  .feedbackButtons {
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1rem;
+  }
+}
+
+/* ✅ Large Devices (laptops/desktops) */
+@media (min-width: 1025px) {
+  .pic {
+    width: 20%;
+    left: 40%;
   }
 }
