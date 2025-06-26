@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-top: 5rem;
+  }
+
+  .spanStyle{
+    color: #ffc815;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .pic {
+    position: absolute;
+    width: 25%;
+    height: auto;
+    bottom: 0;
+    animation: fadeIn 1.5s; 
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .pic {
+      width: 60%;    
+      bottom: 4rem;
+    }
+  }
+

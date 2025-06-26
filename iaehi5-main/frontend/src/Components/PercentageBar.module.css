@@ -1,0 +1,17 @@
+.container {
+  margin-top: 5px;
+  display: flex;
+  height: 0.5rem;
+  width: 100vw;
+}
+.containerItem {
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 2px 2px 0;
+  flex-grow: 1;
+  box-shadow: 2px 2px 6px 0 rgb(0 0 0 / 19%);
+}
+
+.filled{
+    background-color: #0a1a75;
+}

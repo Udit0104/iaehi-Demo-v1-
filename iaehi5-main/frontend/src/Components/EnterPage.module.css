@@ -1,0 +1,67 @@
+.enterpageContainer {
+  display: flex;
+  min-height: 100vh;
+  background: #fff;
+  text-align: center;
+  padding-top: 5rem;
+  align-items: center;
+  flex-direction: column;
+}
+
+.btnsDiv {
+  
+  margin-top: 2rem;
+  display: flex;
+  width: 60%;
+  justify-content: space-evenly;
+}
+
+
+
+.pic {
+  position: absolute;
+  width: 15%;
+  height: auto;
+  bottom: 5%;
+  right: 75%;
+  
+  animation: fadeIn 1.5s;
+}
+
+.spanStyle{
+  color: #ffc815;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .btnsDiv {
+    width: 100%;
+  }
+  .pic {
+    width: 40%;
+    bottom: 4rem;
+  }
+}
+
+.btnsDiv button,
+.btnsDiv .MuiButton-root {
+  background-color: #1b263b !important;   /* dark blue */
+  color: #fff !important;
+  border: none;
+}
+
+.btnsDiv button:hover,
+.btnsDiv .MuiButton-root:hover {
+  background-color: #1976d2 !important;   /* lighter blue on hover */
+  color: #fff !important;
+}

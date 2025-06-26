@@ -1,0 +1,53 @@
+/* .navDiv{
+    padding-right: 0 !important;
+} */
+.navDiv {
+    background: linear-gradient(135deg, #0a1a75 0%, #131300 100%);;
+    /* Add padding and flex if needed */
+    padding: 0.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.adminTypography{
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    color: #fff; /* White text for contrast */
+}
+
+.spanHover{
+    margin-left: 1rem;
+    color: #fff;
+}
+.spanHover:hover{
+    text-decoration: underline;
+    cursor: pointer;
+    color: #ffc815;
+}
+
+.logo{
+    width: 55px;
+}
+
+/* Add responsive styles for smaller screens */
+@media only screen and (max-width: 600px) {
+    .navDiv {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .logo {
+        width: 40px; /* Reduce logo size */
+    }
+
+    .MuiButtonGroup-root {
+        flex-wrap: wrap; /* Allow buttons to wrap */
+        gap: 5px; /* Add spacing between buttons */
+    }
+
+    .MuiButton-root {
+        font-size: 12px; /* Reduce button font size */
+        padding: 5px 10px; /* Adjust button padding */
+    }
+}

@@ -1,0 +1,15 @@
+.dialogTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo{
+  width: 30px;
+  margin-right: 10px;
+}
+
+.dialogTitle{
+  color: #ffc815 !important;
+  
+}

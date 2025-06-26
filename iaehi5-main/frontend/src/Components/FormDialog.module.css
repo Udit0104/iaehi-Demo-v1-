@@ -1,0 +1,15 @@
+.dialogTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff !important;
+  background-color: #001f3f; /* Dark blue background */
+  padding: 10px; /* Optional: adds some space inside the title */
+  border-radius: 4px; /* Optional: softens the corners */
+}
+
+
+.logo {
+  width: 30px;
+  margin-right: 10px;
+}

@@ -1,0 +1,60 @@
+.enterpageContainer {
+  display: flex;
+  text-align: center;
+  padding-top: 5rem;
+  align-items: center;
+  flex-direction: column;
+}
+
+.divItem {
+  width: 100%;
+  text-align: right !important;
+  box-sizing: border-box;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.spanStyle{
+  color: #001f3f;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pic {
+  position: absolute;
+  width: 20%;
+  height: auto;
+  bottom: 0;
+  animation: fadeIn 1.5s; 
+}
+
+.feedbackContainer {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem;
+  animation: fadeIn 0.5s;
+}
+
+.feedbackButtons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@media only screen and (max-width: 600px) {
+  .pic {
+    width: 40%;    
+    bottom: 4rem;
+  }
+  
+  .feedbackButtons {
+    gap: 1rem;
+  }
+}

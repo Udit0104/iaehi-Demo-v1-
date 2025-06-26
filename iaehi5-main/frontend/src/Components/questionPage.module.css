@@ -1,0 +1,72 @@
+body {
+  background: #fff;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  padding-top: 5rem;
+  /* background: linear-gradient(135deg, #80f5f7 0%, #0d2743 100%); */
+}
+.containerThanks {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-top: 5rem;
+}
+
+.containerItem {
+  width: 60%;
+}
+
+.questionDiv {
+  padding-bottom: 1rem;
+}
+.btnsDiv {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  /* background-color: #fff; */
+}
+
+.divBtn {
+  color: #dede0b;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50px;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.divBtnSubmit {
+  width: 5rem;
+  height: 3rem;
+}
+.pic {
+  position: absolute;
+  width: 20%;
+  height: auto;
+  bottom: 0;
+  animation: fadeIn 1.5s; 
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@media only screen and (max-width: 600px) {
+  .pic {
+    width: 40%;    
+    bottom: 4rem;
+  }
+}

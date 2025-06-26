@@ -1,0 +1,32 @@
+.container {
+  height: 100vh;
+  /* background-color: #FFB81C; */
+  /* background-image: radial-gradient(circle, #676767, #5c5c5c, #525252, #484848, #3e3e3e); */
+  /* background-image: linear-gradient(to right top, #676767, #5c5c5c, #525252, #484848, #3e3e3e); */
+  /* background-image: linear-gradient(to right bottom, #676767, #5c5c5c, #525252, #484848, #3e3e3e); */
+  background-image: linear-gradient(
+    to right top,
+    #292929,
+    #343434,
+    #404040,
+    #4c4c4c,
+    #585858
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+    background: linear-gradient(135deg, #80f5f7 0%, #0d2743 100%) !important;
+
+  /* background: radial-gradient(circle, rgba(50,50,50,1) 0%, rgba(50,50,50,1) 0%, rgba(29,29,29,1) 100%); */
+}
+
+.copyrightText{
+    position: absolute;
+    color: #001f3f;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
