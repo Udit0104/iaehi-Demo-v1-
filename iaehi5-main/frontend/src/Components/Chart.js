@@ -134,7 +134,7 @@ export default function ReactChart(props) {
           },
         },
         theme: {
-          mode: "dark",
+          mode: "light",
         },
       },
     });
@@ -164,7 +164,7 @@ export default function ReactChart(props) {
     if (charData === null) {
       setShowSelectionComp(false);
       axios
-        .get(url)
+        .get(`${url}/users`)
         .then((res) => {
           setChartData(res.data);
           // No filtering here, just fetch
