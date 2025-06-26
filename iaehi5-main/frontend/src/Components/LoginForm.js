@@ -15,7 +15,7 @@ import logo from "../Images/logo.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
-
+import { url } from "./Data/apiData";
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -45,7 +45,7 @@ export default function LoginForm({ open, onClose, title }) {
 
   const submitHandle = () => {
     axios
-      .post("http://localhost:5000/admin/login", { username, password }) // Use your backend URL
+      .post(`${url}/admin/login`, { username, password }) // Use your backend URL
       .then((res) => {
         sessionStorage.setItem("admin", "1");
         sessionStorage.setItem("role", res.data.role);

@@ -69,7 +69,7 @@ export default function FormDialog({
   useEffect(() => {
     let isMounted = true;
     axios
-      .get(url)
+      .get(`${url}/users`)
       .then((res) => {
         if (isMounted) {
           const emails = res.data.map((e) => e.email);
@@ -101,7 +101,7 @@ export default function FormDialog({
 
   useEffect(() => {
     // Fetch departments from backend
-    axios.get("http://localhost:5000/api/departments")
+    axios.get(`${url}/api/departments`)
       .then(res => {
         setDepartments(res.data);
       })

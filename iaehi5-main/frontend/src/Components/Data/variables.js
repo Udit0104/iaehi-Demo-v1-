@@ -1,5 +1,6 @@
 import { questions } from "./questionsData";
 import axios from "axios";
+import { url } from "./apiData";
 export const cond1 = "Very Happy";
 export const cond2 = "Happy";
 export const cond3 = "Unhappy";
@@ -92,6 +93,6 @@ export const presentation = [
 
 // Fetch departments from backend
 export const departments = async () => {
-  const res = await axios.get("http://localhost:5000/api/departments");
+  const res = await axios.get(`${url}/api/departments`);
   return res.data; // array of departments from DB
 };
