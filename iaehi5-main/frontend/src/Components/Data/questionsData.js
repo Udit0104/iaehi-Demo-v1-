@@ -568,6 +568,7 @@ export const questions = [
     category: 4,
     que: "How many time have you sung or hummed at least one song in last 4 months (120days) even in bathroom?",
     queHindi: "पिछले 4 महीनों में, आपने कितनी बार मस्ती में गाने गाए या गुनगुनाए (नहाते समय भी गिनें)?",
+    opta: "0-2 times",
     optaHindi: "0-2 बार",
     optb: "10+ times",
     optbHindi: "10+ बार",
