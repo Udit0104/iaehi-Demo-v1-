@@ -247,7 +247,7 @@ export default function FormDialog({
             <InputComp
               id="name"
               error={nameValidation}
-              label={t.name}
+              label={<>{t.name} <span style={{color: "red"}}>*</span></>}
               type="text"
               onChange={userNameHandle}
               helperText={t.nameLengthError}
@@ -255,7 +255,7 @@ export default function FormDialog({
             <InputComp
               id="email"
               error={emailValidation}
-              label={t.email}
+              label={<>{t.email} <span style={{color: "red"}}>*</span></>}
               type="email"
               onChange={emailHandle}
               helperText={t.invalidEmailError}
@@ -267,18 +267,17 @@ export default function FormDialog({
                 id: dep._id,
                 title: language === "hi" && dep.titleHindi ? dep.titleHindi : dep.title
               }))}
-              label={t.departments}
+              label={<>{t.departments} <span style={{color: "red"}}>*</span></>}
             />
             <SelectionComp
               value={ageGroupValue}
               onChange={handleAgeGroupChange}
               menuItems={ageGroups}
-              label={t.ageGroups}
+              label={<>{t.ageGroups} <span style={{color: "red"}}>*</span></>}
             />
-            {/* Role dropdown */}
             <InputComp
               id="role"
-              label="Role"
+              label={<>Role <span style={{color: "red"}}>*</span></>}
               type="text"
               value={roleValue}
               onChange={e => setRoleValue(e.target.value)}
@@ -293,7 +292,16 @@ export default function FormDialog({
               label="Subdepartment (optional)"
             />
           )}
-            <RadioGroup value={gender} onChange={genderHandle} menuItems={genderGroups} />
+            <RadioGroup
+              value={gender}
+              onChange={genderHandle}
+              menuItems={genderGroups}
+              label={<>{t.gender} <span style={{color: "red"}}>*</span></>}
+            />
+            {/* Note below all fields */}
+            <div style={{ marginTop: 16, color: "#d32f2f", fontSize: 14 }}>
+              All fields marked <span style={{color: "red"}}>*</span> are compulsory.
+            </div>
           </DialogContent>
           <DialogActions className={Style.dialogActionsBlue}>
             <ButtonComp
