@@ -1,9 +1,9 @@
-//Category 1: Finance Questions
-//Category 2: Generic Questions
-//Category 3: Health and well being Questions
-//Category 4: Joyful Expressions Questions
-//Category 5: Mandatory
-//Category 6: Social Connection
+//Category 1: Finance Questions 2
+//Category 2: Generic Questions 2
+//Category 3: Health and well being Questions 1
+//Category 4: Joyful Expressions Questions 2
+//Category 5: Mandatory 1
+//Category 6: Social Connection 1
 
 export const questions = [
   {

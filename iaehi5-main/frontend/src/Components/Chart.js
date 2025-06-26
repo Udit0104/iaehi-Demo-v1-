@@ -23,8 +23,8 @@ import {
 // Create extended chartSelection by adding feedback option
 const chartSelection = [
   ...originalChartSelection,
-  { id: 5, title: "Feedback", titleHindi: "प्रतिक्रिया", value: "feedback" },
-  { id: 6, title: "Roles", titleHindi: "भूमिकाएँ", value: "role" }, // <-- Added
+  // { id: 5, title: "Feedback", titleHindi: "प्रतिक्रिया", value: "feedback" },
+  // { id: 6, title: "Roles", titleHindi: "भूमिकाएँ", value: "role" }, // <-- Added
 
 ];
 
@@ -134,7 +134,7 @@ export default function ReactChart(props) {
           },
         },
         theme: {
-          mode: "light",
+          mode: "dark",
         },
       },
     });
@@ -201,55 +201,58 @@ export default function ReactChart(props) {
         obj.data = percentageCal(selectedRes, uniqueItems);
         groupPercentageArr.push(obj);
         getChart(groupPercentageArr, uniqueItems);
-      } else if (selectedValue === "feedback") {
-        axios
-          .get(`${url}/feedback`)
-          .then((res) => {
-            const feedbackData = res.data;
-            const happyCount = feedbackData.filter(
-              (item) => item.isHappyWithResult
-            ).length;
-            const unhappyCount = feedbackData.filter(
-              (item) => !item.isHappyWithResult
-            ).length;
-            const total = feedbackData.length || 1;
-            const feedbackPercentages = [
-              (happyCount / total) * 100,
-              (unhappyCount / total) * 100,
-            ];
-            const feedbackLabels =
-              language === "hi"
-                ? ["संतुष्ट", "असंतुष्ट"]
-                : ["Satisfied", "Unsatisfied"];
-            const feedbackObj = {
-              name: language === "hi" ? "प्रतिक्रिया" : "Feedback",
-              data: feedbackPercentages,
-            };
-            groupPercentageArr.push(feedbackObj);
-            getChart(groupPercentageArr, feedbackLabels);
-          })
-          .catch((err) => {
-            console.log(err);
-            setError(true);
-          });
-      } else if (selectedValue === "role") {
-        // --- ROLES CHART LOGIC ---
-        // Get unique roles
-        const allRoles = filteredData.map((e) => e.role);
-        const uniqueRoles = [...new Set(allRoles)];
-        // Calculate percentages for each role
-        const total = allRoles.length || 1;
-        const rolePercentages = uniqueRoles.map(roleName =>
-          (allRoles.filter(r => r === roleName).length / total) * 100
-        );
-        const roleLabels = uniqueRoles;
-        const roleObj = {
-          name: language === "hi" ? "भूमिकाएँ" : "Roles",
-          data: rolePercentages,
-        };
-        groupPercentageArr.push(roleObj);
-        getChart(groupPercentageArr, roleLabels);
-      } else {
+      } 
+      // else if (selectedValue === "feedback") {
+      //   axios
+      //     .get(`${url}/feedback`)
+      //     .then((res) => {
+      //       const feedbackData = res.data;
+      //       const happyCount = feedbackData.filter(
+      //         (item) => item.isHappyWithResult
+      //       ).length;
+      //       const unhappyCount = feedbackData.filter(
+      //         (item) => !item.isHappyWithResult
+      //       ).length;
+      //       const total = feedbackData.length || 1;
+      //       const feedbackPercentages = [
+      //         (happyCount / total) * 100,
+      //         (unhappyCount / total) * 100,
+      //       ];
+      //       const feedbackLabels =
+      //         language === "hi"
+      //           ? ["संतुष्ट", "असंतुष्ट"]
+      //           : ["Satisfied", "Unsatisfied"];
+      //       const feedbackObj = {
+      //         name: language === "hi" ? "प्रतिक्रिया" : "Feedback",
+      //         data: feedbackPercentages,
+      //       };
+      //       groupPercentageArr.push(feedbackObj);
+      //       getChart(groupPercentageArr, feedbackLabels);
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //       setError(true);
+      //     });
+      // } 
+      // else if (selectedValue === "role") {
+      //   // --- ROLES CHART LOGIC ---
+      //   // Get unique roles
+      //   const allRoles = filteredData.map((e) => e.role);
+      //   const uniqueRoles = [...new Set(allRoles)];
+      //   // Calculate percentages for each role
+      //   const total = allRoles.length || 1;
+      //   const rolePercentages = uniqueRoles.map(roleName =>
+      //     (allRoles.filter(r => r === roleName).length / total) * 100
+      //   );
+      //   const roleLabels = uniqueRoles;
+      //   const roleObj = {
+      //     name: language === "hi" ? "भूमिकाएँ" : "Roles",
+      //     data: rolePercentages,
+      //   };
+      //   groupPercentageArr.push(roleObj);
+      //   getChart(groupPercentageArr, roleLabels);
+      // } 
+      else {
         setShowSelectionComp(true);
         if (presentationView) {
           const selectedRes = filteredData.map((e) => e[selectedValue]);
