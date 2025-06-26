@@ -35,7 +35,7 @@ function Result(props) {
     console.log(userData);
     
     axios
-      .post(url, userData)
+      .post(`${url}/users`, userData)
       .then(() => {
         setFeedbackSubmitted(true);
         setTimeout(() => {
