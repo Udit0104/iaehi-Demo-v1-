@@ -40,7 +40,6 @@ const theme = createTheme({
   },
 });
 
-
 export default function FormDialog({
   open,
   onClose,
@@ -62,6 +61,7 @@ export default function FormDialog({
   const [roleValue, setRoleValue] = useState("");
   const [departments, setDepartments] = useState([]);
   const [subdepartmentOptions, setSubdepartmentOptions] = useState([]);
+  const [otherDepartment, setOtherDepartment] = useState(""); // Add this state
   const { t, language } = useLanguage();
 
   const navigate = useNavigate();
@@ -166,11 +166,15 @@ export default function FormDialog({
   const handleFinalSubmit = () => {
     let dep, gen, age;
     let roleName;
-    departments.forEach((e) => {
-      if (e._id === departmentValue) {
-        dep = language === "hi" && e.titleHindi ? e.titleHindi : e.title;
-      }
-    });
+    if (departmentValue === "other") {
+      dep = otherDepartment;
+    } else {
+      departments.forEach((e) => {
+        if (e._id === departmentValue) {
+          dep = language === "hi" && e.titleHindi ? e.titleHindi : e.title;
+        }
+      });
+    }
     ageGroups.forEach((e) => {
       if (e.id == ageGroupValue) {
         age = language === "hi" && e.titleHindi ? e.titleHindi : e.title;
@@ -264,12 +268,24 @@ export default function FormDialog({
             <SelectionComp
               value={departmentValue}
               onChange={handleDepartmentChange}
-              menuItems={departments.map(dep => ({
-                id: dep._id,
-                title: language === "hi" && dep.titleHindi ? dep.titleHindi : dep.title
-              }))}
+              menuItems={[
+                ...departments.map(dep => ({
+                  id: dep._id,
+                  title: language === "hi" && dep.titleHindi ? dep.titleHindi : dep.title
+                })),
+                { id: "other", title: language === "hi" ? "अन्य" : "Others" } // Add Others option
+              ]}
               label={<>{t.departments} <span style={{color: "red"}}>*</span></>}
             />
+            {departmentValue === "other" && (
+              <InputComp
+                id="otherDepartment"
+                label={<>{language === "hi" ? "विभाग (अन्य)" : "Enter your Department (Other)"} <span style={{color: "red"}}>*</span></>}
+                type="text"
+                value={otherDepartment}
+                onChange={e => setOtherDepartment(e.target.value)}
+              />
+            )}
             <SelectionComp
               value={ageGroupValue}
               onChange={handleAgeGroupChange}
@@ -308,6 +324,7 @@ export default function FormDialog({
             <ButtonComp
               disabled={
                 departmentValue === "" ||
+                (departmentValue === "other" && otherDepartment.trim() === "") ||
                 ageGroupValue === "" ||
                 username === null ||
                 email === null ||
