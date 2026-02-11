@@ -6,6 +6,7 @@ import Style from "./App.module.css";
 import Result from "./Components/Result";
 import Chart from "./Components/Chart";
 import NavBar from "./Components/NavBar";
+import Footer from "./Components/Footer"
 import MaybeNextTime from "./Components/MaybeNextTime";
 import { useState } from "react";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -37,9 +38,10 @@ function App() {
             <Route path="/nexttime" element={<MaybeNextTime />} />
           </Routes>
         </Router>
-        <div className={Style.copyrightText}>
+        {/* <div className={Style.copyrightText}>
           Copyright © 2025 IaeHi Technology - All Rights Reserved.
-        </div>
+        </div> */}
+        <Footer/>
       </div>
     </LanguageProvider>
   );

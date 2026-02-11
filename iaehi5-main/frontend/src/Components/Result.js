@@ -55,7 +55,7 @@ function Result(props) {
     <>
       <div className={Style.enterpageContainer}>
         <Typography
-          style={{ color: "#fff", padding: "2rem" }}
+          style={{ color: "#121111", padding: "2rem" }}
           variant="h3"
           gutterBottom
         >
@@ -63,7 +63,7 @@ function Result(props) {
           {t.forYourTime}
         </Typography>
         <Typography
-          style={{ color: "#fff", padding: "2rem" }}
+          style={{ color: "#121111", padding: "2rem" }}
           variant="h4"
           gutterBottom
         >
@@ -75,7 +75,7 @@ function Result(props) {
             {!feedbackSubmitted ? (
               <>
                 <Typography
-                  style={{ color: "#fff", padding: "1rem" }}
+                  style={{ color: "#121111", padding: "1rem" }}
                   variant="h5"
                   gutterBottom
                 >
@@ -99,7 +99,7 @@ function Result(props) {
         )}
 
         <Typography
-          style={{ color: "#fff", padding: "2rem" }}
+          style={{ color: "#121111", padding: "2rem" }}
           variant="h5"
           gutterBottom
         >

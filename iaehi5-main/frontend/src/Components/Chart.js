@@ -1,4 +1,3 @@
-// filepath: /c:/Users/uditv/OneDrive/Desktop/iaehi/frontend/src/Components/Chart.js
 import Style from "./Chart.module.css";
 import React, { useState, useEffect } from "react";
 import { url } from "./Data/apiData";
@@ -7,12 +6,20 @@ import Loader from "./ReUsable/Loader";
 import SelectionComp from "./ReUsable/SelectionComp";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material"; 
 import axios from "axios";
 import Chart from "react-apexcharts";
 import Error from "./ReUsable/Error";
 import { useLanguage } from "../contexts/LanguageContext";
 
-// Modified import for variables with necessary chart selections
 import {
   chartSelection as originalChartSelection,
   chartType,
@@ -20,18 +27,16 @@ import {
   departments,
 } from "./Data/variables";
 
-// Create extended chartSelection by adding feedback option
 const chartSelection = [
   ...originalChartSelection,
-  // { id: 5, title: "Feedback", titleHindi: "प्रतिक्रिया", value: "feedback" },
-  // { id: 6, title: "Roles", titleHindi: "भूमिकाएँ", value: "role" }, // <-- Added
-
 ];
 
 export default function ReactChart(props) {
   const { setMsg } = props;
   const [charData, setChartData] = useState(null);
   const [state, setState] = useState(null);
+  const [chartDataNumbers, setChartDataNumbers] = useState([]);
+  const [chartCategories, setChartCategories] = useState([]);
   const [selected, setSelected] = useState(chartSelection[0].id);
   const [selectedValue, setSelectedValue] = useState("");
   const [showSelectionsComp, setShowSelectionComp] = useState(false);
@@ -50,7 +55,6 @@ export default function ReactChart(props) {
       primary: {
         main: "#ffc815",
       },
-      
     },
   });
 
@@ -68,7 +72,55 @@ export default function ReactChart(props) {
     return percentateArr;
   };
 
-  const getChart = (groupPercentageArr, uniqueItems) => {
+  const getCountData = (arr, uniqueItems) => {
+    const countArr = [];
+    uniqueItems.forEach((currVal) => {
+      const numItems = arr.filter((val) => val === currVal);
+      countArr.push(numItems.length);
+    });
+    return countArr;
+  };
+
+  const getChart = (groupPercentageArr, uniqueItems, countData = null) => {
+    const countsMapping = countData ? countData : null;
+
+    const dataNumbersArray = [];
+    if (countData && countData.length > 0) {
+      countData.forEach((counts, idx) => {
+        const dataPoints = [];
+        counts.forEach((count, countIdx) => {
+          dataPoints.push({
+            count: count,
+            percentage: groupPercentageArr[idx]
+              ? groupPercentageArr[idx].data[countIdx]
+              : null,
+          });
+        });
+        dataNumbersArray.push({
+          name: groupPercentageArr[idx]
+            ? groupPercentageArr[idx].name
+            : `Series ${idx + 1}`,
+          dataPoints: dataPoints,
+        });
+      });
+    } else {
+      groupPercentageArr.forEach((series) => {
+        const dataPoints = [];
+        series.data.forEach((percentage, idx) => {
+          dataPoints.push({
+            percentage: percentage,
+          });
+        });
+        dataNumbersArray.push({
+          name: series.name,
+          dataPoints: dataPoints,
+        });
+      });
+    }
+
+    setChartCategories(uniqueItems);
+    setChartDataNumbers(dataNumbersArray);
+
     setState({
       series: groupPercentageArr,
       options: {
@@ -76,6 +128,7 @@ export default function ReactChart(props) {
           type: "bar",
           height: 350,
           stacked: chartTypeView,
+          // background: "#c5dcee", // <--- Add your background color here (e.g., #ffffff, #f4f4f4)
           toolbar: {
             show: true,
           },
@@ -128,18 +181,30 @@ export default function ReactChart(props) {
         },
         tooltip: {
           y: {
-            formatter: function (val) {
+            formatter: function (val, opts) {
+              try {
+                const sIdx = opts.seriesIndex;
+                const dIdx = opts.dataPointIndex;
+                const cnt =
+                  countsMapping &&
+                  countsMapping[sIdx] &&
+                  countsMapping[sIdx][dIdx] !== undefined
+                    ? countsMapping[sIdx][dIdx]
+                    : null;
+                if (cnt !== null) return cnt;
+              } catch (e) {
+                // fallback to percentage if anything goes wrong
+              }
               return val + " %";
             },
           },
         },
         theme: {
-          mode: "dark",
+          mode: "light",
         },
       },
     });
   };
-
   useEffect(() => {
     const uniqueItems = [
       variables.cond1,
@@ -149,50 +214,48 @@ export default function ReactChart(props) {
     ];
     const groupPercentageArr = [];
 
-    // Helper to normalize department names (if you want to treat Hindi/English as same)
     function normalizeDepartment(dep) {
       if (!dep) return "";
       if (["Production", "उत्पादन"].includes(dep)) return "Production";
       if (["Maintenance", "रखरखाव"].includes(dep)) return "Maintenance";
-      if (["Human resources", "मानव संसाधन"].includes(dep)) return "Human resources";
-      if (["Customer service", "ग्राहक सेवा"].includes(dep)) return "Customer service";
-      // Add more mappings as needed
+      if (["Human resources", "मानव संसाधन"].includes(dep))
+        return "Human resources";
+      if (["Customer service", "ग्राहक सेवा"].includes(dep))
+        return "Customer service";
       return dep;
     }
 
-    // Fetch user data if not already fetched
     if (charData === null) {
       setShowSelectionComp(false);
       axios
         .get(`${url}/users`)
         .then((res) => {
           setChartData(res.data);
-          // No filtering here, just fetch
           const selectedRes = res.data.map((e) => e.result);
           const obj = {};
           obj.name = "Overall";
           obj.data = percentageCal(selectedRes, uniqueItems);
           groupPercentageArr.push(obj);
-          getChart(groupPercentageArr, uniqueItems);
+          const counts = getCountData(selectedRes, uniqueItems);
+          getChart(groupPercentageArr, uniqueItems, [counts]);
         })
         .catch((err) => {
           console.log(err);
           setError(true);
         });
     } else {
-      // FILTER DATA BASED ON ADMIN DEPARTMENT
       let filteredData = Array.isArray(charData) ? charData : [];
       if (role !== "superadmin") {
         filteredData = filteredData.filter(
           (user) =>
-            normalizeDepartment(user.department) === normalizeDepartment(adminDepartment)
+            normalizeDepartment(user.department) ===
+            normalizeDepartment(adminDepartment)
         );
       }
 
       console.log("Admin department:", adminDepartment);
       console.log("Filtered users:", filteredData);
 
-      // Now use filteredData for all chart logic below
       if (selectedValue === "") {
         setShowSelectionComp(false);
         const selectedRes = filteredData.map((e) => e.result);
@@ -200,8 +263,9 @@ export default function ReactChart(props) {
         obj.name = "Overall";
         obj.data = percentageCal(selectedRes, uniqueItems);
         groupPercentageArr.push(obj);
-        getChart(groupPercentageArr, uniqueItems);
-      } 
+        const counts = getCountData(selectedRes, uniqueItems);
+        getChart(groupPercentageArr, uniqueItems, [counts]);
+      }
       // else if (selectedValue === "feedback") {
       //   axios
       //     .get(`${url}/feedback`)
@@ -233,7 +297,7 @@ export default function ReactChart(props) {
       //       console.log(err);
       //       setError(true);
       //     });
-      // } 
+      // }
       // else if (selectedValue === "role") {
       //   // --- ROLES CHART LOGIC ---
       //   // Get unique roles
@@ -251,13 +315,14 @@ export default function ReactChart(props) {
       //   };
       //   groupPercentageArr.push(roleObj);
       //   getChart(groupPercentageArr, roleLabels);
-      // } 
+      // }
       else {
         setShowSelectionComp(true);
         if (presentationView) {
           const selectedRes = filteredData.map((e) => e[selectedValue]);
           const arrLength = selectedRes.length;
           const uniqueSelectedItems = new Set(selectedRes);
+          const countDataArray = [];
           uniqueSelectedItems.forEach((item) => {
             const arr = [];
             const obj = {};
@@ -268,14 +333,17 @@ export default function ReactChart(props) {
             });
             obj.name = item;
             obj.data = percentageCal(arr, uniqueItems, arrLength);
+            const counts = getCountData(arr, uniqueItems);
+            countDataArray.push(counts);
             groupPercentageArr.push(obj);
           });
-          getChart(groupPercentageArr, uniqueItems);
+          getChart(groupPercentageArr, uniqueItems, countDataArray);
         } else {
           const selectedRes = filteredData.map((e) => e.result);
           const selectedValues = filteredData.map((e) => e[selectedValue]);
           const arrLength = selectedRes.length;
           const uniqueSelectedItems = [...new Set(selectedValues)];
+          const countDataArray = [];
           uniqueItems.forEach((item) => {
             const arr = [];
             const obj = {};
@@ -286,13 +354,23 @@ export default function ReactChart(props) {
             });
             obj.name = item;
             obj.data = percentageCal(arr, uniqueSelectedItems, arrLength);
+            const counts = getCountData(arr, uniqueSelectedItems);
+            countDataArray.push(counts);
             groupPercentageArr.push(obj);
           });
-          getChart(groupPercentageArr, uniqueSelectedItems);
+          getChart(groupPercentageArr, uniqueSelectedItems, countDataArray);
         }
       }
     }
-  }, [selectedValue, presentationView, charData, chartTypeVal, language, role, adminDepartment]);
+  }, [
+    selectedValue,
+    presentationView,
+    charData,
+    chartTypeVal,
+    language,
+    role,
+    adminDepartment,
+  ]);
 
   const selectionHandle = (event) => {
     const selectedObj = chartSelection.find((e) => e.id === event.target.value);
@@ -366,6 +444,63 @@ export default function ReactChart(props) {
                 height={350}
               />
             </div>
+            {/* --- DETAILED DATA TABLE ADDED HERE --- */}
+            <div style={{ padding: "0 20px 20px 20px" }}>
+              <TableContainer component={Paper} elevation={2}>
+                <Table size="small" aria-label="simple table">
+                  <TableHead style={{ backgroundColor: "#f5f5f5" }}>
+                    <TableRow>
+                      <TableCell style={{ fontWeight: "bold" }}>
+                        {t.groups || "Group / Series"}
+                      </TableCell>
+                      {chartCategories.map((cat, index) => (
+                        <TableCell
+                          key={index}
+                          align="center"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          {cat}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {chartDataNumbers.map((row, rowIndex) => (
+                      <TableRow key={rowIndex}>
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        {row.dataPoints.map((dp, dpIndex) => (
+                          <TableCell key={dpIndex} align="center">
+                            {dp && dp.count !== undefined ? (
+                              <>
+                                <div style={{ fontWeight: 500 }}>
+                                  {dp.count}
+                                </div>
+                                <div
+                                  style={{
+                                    fontSize: "0.8em",
+                                    color: "#666",
+                                  }}
+                                >
+                                  ({dp.percentage}%)
+                                </div>
+                              </>
+                            ) : dp && dp.percentage !== undefined ? (
+                              // Fallback if only percentage is available
+                              `${dp.percentage}%`
+                            ) : (
+                              "-"
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+            {/* -------------------------------------- */}
           </>
         ) : (
           <Loader />

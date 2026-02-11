@@ -1,0 +1,44 @@
+.footer {
+  width: 100%;
+  background: linear-gradient(135deg, #ffffff 0%, #8fcee4 100%) !important;
+  backdrop-filter: blur(4px);
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  box-shadow: 0 -1px 8px rgba(0,0,0,0.08);
+  z-index: 10;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  color: #001f3f;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .inner {
+    padding: 10px 16px;
+  }
+  .text {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    padding: 8px 12px;
+  }
+  .text {
+    font-size: 11px;
+  }
+}
