@@ -25,21 +25,17 @@ function QuestionPage(props) {
   const { t, language } = useLanguage();
 
   useEffect(() => {
-    ///////////////////
-
     window.history.pushState(null, null, window.location.pathname);
     window.addEventListener("popstate", onBackButtonEvent);
-
-    //logic for showing popup warning on page refresh
 
     window.onbeforeunload = function () {
       sessionStorage.clear();
     };
-    ///////////////////
 
     const val = sessionStorage.getItem("loggedin");
     setLoggedin(val);
     setImageRefresh(true);
+
     if (
       variables.queBank.length !== 0 &&
       variables.queBank.length === finalAns.length
@@ -60,16 +56,33 @@ function QuestionPage(props) {
       finalAns.forEach((e, i) => {
         ansObjArr[`q${i + 1}`] = e;
       });
-      const data = {
+
+      // Prepare data with default feedback set to true
+      const dataToSave = {
         ...userData,
         score,
         result,
         language,
+        isHappyWithResult: true, // Default true in case they don't give feedback
+        timestamp: new Date().toISOString(),
       };
-      navigate("/result", { state: data }); // Pass all user data to Result page
-    }
 
-    ////////////// return function by useEffect /////////
+      // POST to database immediately
+      axios
+        .post(`${url}/users`, dataToSave)
+        .then((response) => {
+          // Extract the database ID (using _id for MongoDB or id)
+          const dbId = response.data._id || response.data.id;
+          
+          // Pass data and dbId to Result page
+          navigate("/result", { state: { ...dataToSave, dbId } });
+        })
+        .catch((err) => {
+          console.error("Error saving initial data:", err);
+          // Fallback navigation so user isn't stuck if the request fails
+          navigate("/result", { state: dataToSave }); 
+        });
+    }
 
     return () => {
       window.removeEventListener("popstate", onBackButtonEvent);
@@ -98,8 +111,6 @@ function QuestionPage(props) {
     const finalArr = finalAns.map((item, idx) => {
       const q = variables.queBank[idx];
       const reverse = q && q.reverseScoring;
-      // Normal scoring: a=0, b=5, c=15, d=20
-      // Reverse scoring: a=20, b=15, c=5, d=0
       switch (item) {
         case "opta":
           return reverse ? 20 : 0;
@@ -114,6 +125,7 @@ function QuestionPage(props) {
     let sum = finalArr.reduce((acc, item) => acc + item, 0);
     return sum;
   };
+
   const nextQueHandle = () => {
     setFinalAns((prev) => [...prev, value]);
     setImageRefresh(false);
@@ -124,7 +136,6 @@ function QuestionPage(props) {
   };
 
   const submitHandle = () => {
-    // finalAns.push(value);
     setFinalAns((prev) => [...prev, value]);
   };
 
@@ -133,50 +144,45 @@ function QuestionPage(props) {
       <PercentageBar completed={incrementVal} queBank={variables.queBank} />
       <div className={Style.headerDiv}>
         <div className={Style.container}>
-        <div className={Style.containerItem}>
-          {/* Question */}
-          <div className={Style.questionDiv}>
-            <Typography style={{ color: "black" }} variant="h6" gutterBottom>
-              {variables.queBank ? (
-                language === "hi" &&
-                variables.queBank[incrementVal].queHindi ? (
-                  variables.queBank[incrementVal].queHindi
+          <div className={Style.containerItem}>
+            <div className={Style.questionDiv}>
+              <Typography style={{ color: "black" }} variant="h6" gutterBottom>
+                {variables.queBank ? (
+                  language === "hi" &&
+                  variables.queBank[incrementVal].queHindi ? (
+                    variables.queBank[incrementVal].queHindi
+                  ) : (
+                    variables.queBank[incrementVal].que
+                  )
                 ) : (
-                  variables.queBank[incrementVal].que
-                )
-              ) : (
-                <Loader />
-              )}
-            </Typography>
-          </div>
-          {/* Options component */}
-          {variables.queBank ? (
-            <Options
-              value={value}
-              setValue={setValue}
-              {...variables.queBank[incrementVal]}
-              language={language}
-            />
-          ) : null}
-
-          {/* Buttons */}
-          <div className={Style.btnsDiv}>
-            {value && incrementVal === variables.queBank.length - 1 && (
-              <ButtonComp title={t.submit} onClick={submitHandle} />
-            )}
-            {value && incrementVal !== variables.queBank.length - 1 && (
-              <ButtonComp
-                title={t.next}
-                onClick={nextQueHandle}
-                endIcon={<ArrowForward />}
+                  <Loader />
+                )}
+              </Typography>
+            </div>
+            {variables.queBank ? (
+              <Options
+                value={value}
+                setValue={setValue}
+                {...variables.queBank[incrementVal]}
+                language={language}
               />
-            )}
+            ) : null}
+
+            <div className={Style.btnsDiv}>
+              {value && incrementVal === variables.queBank.length - 1 && (
+                <ButtonComp title={t.submit} onClick={submitHandle} />
+              )}
+              {value && incrementVal !== variables.queBank.length - 1 && (
+                <ButtonComp
+                  title={t.next}
+                  onClick={nextQueHandle}
+                  endIcon={<ArrowForward />}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
-      
-      </div>
-      
     </>
   ) : (
     <Error setMsg={setMsg} />

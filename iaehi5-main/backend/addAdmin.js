@@ -15,24 +15,7 @@ async function createAdmins() {
       role: "superadmin",
       department: null,
     },
-    {
-      username: "itcaadmin",
-      password: "itcapd",
-      role: "departmentadmin",
-      department: "Information Technology and Computer Application",
-    },
-    {
-      username: "csedadmin",
-      password: "csedpd",
-      role: "departmentadmin",
-      department: "CSED",
-    },
-    {
-      username: "hindimaintenanceadmin",
-      password: "hindimaintpassword",
-      role: "departmentadmin",
-      department: "रखरखाव",
-    },
+    
     // Add more admins as needed
   ]);
 

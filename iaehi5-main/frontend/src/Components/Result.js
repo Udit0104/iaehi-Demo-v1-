@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Style from "./Result.module.css";
 import Typography from "@material-ui/core/Typography";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import Button from "./ReUsable/ButtonComp";
 import axios from "axios";
@@ -10,14 +9,28 @@ import { url } from "./Data/apiData";
 
 function Result(props) {
   const { setMsg } = props;
-  const data = useLocation(); 
-  const finalResult = data.state.score;
-  const [firstName, lastName] = data.state.username.split(" ");
-  const username =
-    firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+  const data = useLocation();
   const navigate = useNavigate();
-  const { t, language } = useLanguage();
-  const [showFeedback, setShowFeedback] = useState(true);
+  const { t } = useLanguage();
+
+  // Safely extract data from location state
+  const finalResult = data.state?.score;
+  const dbId = data.state?.dbId;
+  const fullUsername = data.state?.username || "Guest";
+  
+  // Format username
+  const [firstName] = fullUsername.split(" ");
+  const username = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+
+  // Create a unique key for LocalStorage based on the database ID or username
+  const storageKey = `feedback_submitted_${dbId || fullUsername}`;
+
+  // Initialize showFeedback based on whether the key exists in LocalStorage
+  const [showFeedback, setShowFeedback] = useState(() => {
+    const alreadySubmitted = localStorage.getItem(storageKey);
+    return alreadySubmitted !== "true";
+  });
+  
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
   const onClickHandle = () => {
@@ -26,25 +39,29 @@ function Result(props) {
   };
 
   const handleFeedback = (isHappy) => {
-    // Combine all user data from navigation state
-    const userData = {
-      ...data.state, // includes username, email, department, subdepartment, ageGroup, gender, score, result, language
-      isHappyWithResult: isHappy,
-      timestamp: new Date().toISOString(),
-    };
-    console.log(userData);
-    
+    // 1. Immediately update UI state
+    setFeedbackSubmitted(true);
+
+    if (!dbId) {
+      console.error("No database ID found to update.");
+      setTimeout(() => setShowFeedback(false), 1500);
+      return;
+    }
+
+    // 2. Make the PATCH request
     axios
-      .post(`${url}/users`, userData)
+      .patch(`${url}/users/${dbId}`, { isHappyWithResult: isHappy })
       .then(() => {
-        setFeedbackSubmitted(true);
+        // 3. Save to LocalStorage so refresh doesn't bring the buttons back
+        localStorage.setItem(storageKey, "true");
+
         setTimeout(() => {
           setShowFeedback(false);
         }, 1500);
       })
       .catch((err) => {
-        console.error("Error submitting feedback:", err);
-        setFeedbackSubmitted(true);
+        console.error("Error updating feedback:", err);
+        // Hide anyway to prevent double-submitting on error
         setTimeout(() => {
           setShowFeedback(false);
         }, 1500);
@@ -62,6 +79,7 @@ function Result(props) {
           {t.thankYou} <span style={{ color: "#001f3f" }}>{username}</span>{" "}
           {t.forYourTime}
         </Typography>
+        
         <Typography
           style={{ color: "#121111", padding: "2rem" }}
           variant="h4"
@@ -109,7 +127,6 @@ function Result(props) {
           </span>
         </Typography>
       </div>
-      {/* <img className={Style.pic} src="/Images/thankyou.png" alt="Thank you" /> */}
     </>
   );
 }

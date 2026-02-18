@@ -65,6 +65,62 @@ app.get("/", (req, res) => {
   res.send("Hello from the backend server!");
 });
 
+// app.get("/users/:id", async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     // Validate ObjectId
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return res.status(400).json({ error: "Invalid user ID" });
+//     }
+
+//     // Find user in MongoDB
+//     const user = await mongoose.connection
+//       .collection("users")
+//       .findOne({ _id: new mongoose.Types.ObjectId(id) });
+
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+
+//     res.status(200).json(user);
+
+//   } catch (error) {
+//     console.error("Error fetching user:", error);
+//     res.status(500).json({ error: "Server error while fetching user" });
+//   }
+// });
+
+
+// --- NEW PATCH ENDPOINT ADDED HERE ---
+// PATCH route to update a specific user by ID
+app.patch("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Validate the ObjectId to prevent server crashes
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    // Update the specific user directly in the MongoDB collection
+    const result = await mongoose.connection.collection("users").updateOne(
+      { _id: new mongoose.Types.ObjectId(id) },
+      { $set: req.body }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Server error while updating user" });
+  }
+});
+// -------------------------------------
+
 // Connect to MongoDB and load routes
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -96,3 +152,4 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
   });
+  
