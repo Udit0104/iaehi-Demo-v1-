@@ -33,8 +33,8 @@ const translations = {
     // Result page
     thankYou: "Thank you",
     forYourTime: "for your time!",
-    veryHappyMessage: "You are happy! Just keep it up :)",
-    lessHappyMessage: "You are just few points behind to be happy :)",
+    veryHappyMessage: "You are happy! Just keep it up ",
+    lessHappyMessage: "You are just few points behind to be happy ",
     backToHome: "Back to home",
     happyWithResult: "Are you satisfied with our result?",
     yes: "Yes",

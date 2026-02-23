@@ -57,7 +57,7 @@ function Result(props) {
     <div className={Style.enterpageContainer}>
       {/* Heading with subtle laugh emoji */}
       <Typography variant="h2" className={Style.mainTitle}>
-        {t.happinessLevel || "Your Happiness Level"} <span className={Style.emoji}>😊</span>
+        {t.happinessLevel || "Your Happiness Level"}
       </Typography>
       <div className={Style.headerDivider}></div>
 
@@ -76,6 +76,7 @@ function Result(props) {
         className={Style.messageText}
       >
         {finalResult >= 91 ? t.veryHappyMessage : t.lessHappyMessage}
+        <span className={Style.emoji}>😊</span>
       </Typography>
 
       {showFeedback && (
