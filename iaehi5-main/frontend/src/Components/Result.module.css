@@ -2,12 +2,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
+  justify-content: flex-start; /* Changed to flex-start for a better top-down flow */
+  padding: 5rem 1rem; /* More top padding for the new heading */
   box-sizing: border-box;
   width: 100%;
   min-height: 100vh;
   text-align: center;
+}
+
+/* --- New Heading Styles --- */
+.mainTitle {
+  color: #001f3f !important;
+  font-family: 'Playfair Display', serif;
+
+  font-weight: 790 !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.5rem !important;
+}
+
+.headerDivider {
+  width: 80px;
+  height: 5px;
+  background-color: #ffc815;
+  border-radius: 10px;
+  margin-bottom: 2.5rem;
 }
 
 .divItem {
@@ -15,6 +34,7 @@
   text-align: right !important;
   box-sizing: border-box;
   text-decoration: underline;
+  font-family: 'Montserrat', sans-serif;
   cursor: pointer;
 }
 
@@ -22,7 +42,7 @@
   color: #ffc815;
   cursor: pointer;
   text-decoration: underline;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: color 0.3s;
   word-break: break-word;
 }
@@ -45,17 +65,17 @@
   align-items: center;
   margin: 2rem 0;
   width: 100%;
-  max-width: 400px;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  max-width: 450px;
+  background-color: rgba(0, 0, 0, 0.05); /* Softened the background */
+  border-radius: 15px;
   padding: 1.5rem;
   animation: fadeIn 0.5s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .feedbackButtons {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 1rem;
@@ -69,7 +89,11 @@
 /* ✅ Extra Small Devices (phones < 600px) */
 @media (max-width: 600px) {
   .enterpageContainer {
-    padding: 1.5rem 1rem;
+    padding: 3rem 1rem;
+  }
+
+  .mainTitle {
+    font-size: 1.8rem !important;
   }
 
   .pic {
@@ -78,28 +102,21 @@
     left: 25%;
   }
 
-  .spanStyle {
-    font-size: 1rem;
-  }
-
   .feedbackContainer {
     padding: 1rem;
-    margin: 1.5rem 0;
-    width: 90%;
+    width: 95%;
   }
 
   .feedbackButtons {
     flex-direction: column;
+    width: 100%;
     gap: 0.75rem;
   }
 
-  .feedbackButtons button {
-    width: 100%; /* Full-width buttons on small screens */
-  }
-
-  h3, h4, h5, .MuiTypography-root {
-    font-size: 1.1rem !important;
-  }
+  /* Make typography slightly smaller for small screens */
+  h3, .MuiTypography-h3 { font-size: 1.5rem !important; }
+  h4, .MuiTypography-h4 { font-size: 1.3rem !important; }
+  h5, .MuiTypography-h5 { font-size: 1.1rem !important; }
 }
 
 /* ✅ Medium Devices (tablets) */
@@ -107,12 +124,6 @@
   .pic {
     width: 35%;
     left: 32.5%;
-  }
-
-  .feedbackButtons {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
   }
 }
 
