@@ -7,6 +7,7 @@ import Result from "./Components/Result";
 import Chart from "./Components/Chart";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer"
+import DetailedSummary from "./Components/SummaryReport/DetailedSummary";
 import MaybeNextTime from "./Components/MaybeNextTime";
 import { useState } from "react";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -36,6 +37,7 @@ function App() {
             <Route path="/result" element={<Result setMsg={setNavBarMsg} />} />
             <Route path="/chart" element={<Chart setMsg={setNavBarMsg} />} />
             <Route path="/nexttime" element={<MaybeNextTime />} />
+            <Route path="/detailed-summary" element={<DetailedSummary />} />
           </Routes>
         </Router>
         {/* <div className={Style.copyrightText}>

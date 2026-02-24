@@ -15,6 +15,8 @@ import {
   TableRow,
   Paper,
 } from "@mui/material"; 
+import Button from "./ReUsable/ButtonComp";
+import { useNavigate } from "react-router-dom"; // Hook imported
 import axios from "axios";
 import Chart from "react-apexcharts";
 import Error from "./ReUsable/Error";
@@ -33,6 +35,8 @@ const chartSelection = [
 
 export default function ReactChart(props) {
   const { setMsg } = props;
+  const navigate = useNavigate(); // ✅ Hook initialized here to fix "navigate is not defined"
+  
   const [charData, setChartData] = useState(null);
   const [state, setState] = useState(null);
   const [chartDataNumbers, setChartDataNumbers] = useState([]);
@@ -128,7 +132,6 @@ export default function ReactChart(props) {
           type: "bar",
           height: 350,
           stacked: chartTypeView,
-          // background: "#c5dcee", // <--- Add your background color here (e.g., #ffffff, #f4f4f4)
           toolbar: {
             show: true,
           },
@@ -192,9 +195,7 @@ export default function ReactChart(props) {
                     ? countsMapping[sIdx][dIdx]
                     : null;
                 if (cnt !== null) return cnt;
-              } catch (e) {
-                // fallback to percentage if anything goes wrong
-              }
+              } catch (e) {}
               return val + " %";
             },
           },
@@ -205,6 +206,7 @@ export default function ReactChart(props) {
       },
     });
   };
+
   useEffect(() => {
     const uniqueItems = [
       variables.cond1,
@@ -253,9 +255,6 @@ export default function ReactChart(props) {
         );
       }
 
-      console.log("Admin department:", adminDepartment);
-      console.log("Filtered users:", filteredData);
-
       if (selectedValue === "") {
         setShowSelectionComp(false);
         const selectedRes = filteredData.map((e) => e.result);
@@ -266,56 +265,6 @@ export default function ReactChart(props) {
         const counts = getCountData(selectedRes, uniqueItems);
         getChart(groupPercentageArr, uniqueItems, [counts]);
       }
-      // else if (selectedValue === "feedback") {
-      //   axios
-      //     .get(`${url}/feedback`)
-      //     .then((res) => {
-      //       const feedbackData = res.data;
-      //       const happyCount = feedbackData.filter(
-      //         (item) => item.isHappyWithResult
-      //       ).length;
-      //       const unhappyCount = feedbackData.filter(
-      //         (item) => !item.isHappyWithResult
-      //       ).length;
-      //       const total = feedbackData.length || 1;
-      //       const feedbackPercentages = [
-      //         (happyCount / total) * 100,
-      //         (unhappyCount / total) * 100,
-      //       ];
-      //       const feedbackLabels =
-      //         language === "hi"
-      //           ? ["संतुष्ट", "असंतुष्ट"]
-      //           : ["Satisfied", "Unsatisfied"];
-      //       const feedbackObj = {
-      //         name: language === "hi" ? "प्रतिक्रिया" : "Feedback",
-      //         data: feedbackPercentages,
-      //       };
-      //       groupPercentageArr.push(feedbackObj);
-      //       getChart(groupPercentageArr, feedbackLabels);
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //       setError(true);
-      //     });
-      // }
-      // else if (selectedValue === "role") {
-      //   // --- ROLES CHART LOGIC ---
-      //   // Get unique roles
-      //   const allRoles = filteredData.map((e) => e.role);
-      //   const uniqueRoles = [...new Set(allRoles)];
-      //   // Calculate percentages for each role
-      //   const total = allRoles.length || 1;
-      //   const rolePercentages = uniqueRoles.map(roleName =>
-      //     (allRoles.filter(r => r === roleName).length / total) * 100
-      //   );
-      //   const roleLabels = uniqueRoles;
-      //   const roleObj = {
-      //     name: language === "hi" ? "भूमिकाएँ" : "Roles",
-      //     data: rolePercentages,
-      //   };
-      //   groupPercentageArr.push(roleObj);
-      //   getChart(groupPercentageArr, roleLabels);
-      // }
       else {
         setShowSelectionComp(true);
         if (presentationView) {
@@ -396,9 +345,18 @@ export default function ReactChart(props) {
       setPresentationView(true);
     }
   };
+
   return !error ? (
     sessionStorage.getItem("admin") === "1" ? (
       <>
+        {/* ✅ Button placed at the top for better visibility */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px 20px' }}>
+          <Button 
+            title={t.viewDetailedSummary || "Detailed Report Summary"} 
+            onClick={() => navigate("/detailed-summary")} 
+          />
+        </div>
+
         <div className={Style.selectionContainer}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -444,7 +402,7 @@ export default function ReactChart(props) {
                 height={350}
               />
             </div>
-            {/* --- DETAILED DATA TABLE ADDED HERE --- */}
+            
             <div style={{ padding: "0 20px 20px 20px" }}>
               <TableContainer component={Paper} elevation={2}>
                 <Table size="small" aria-label="simple table">
@@ -477,17 +435,11 @@ export default function ReactChart(props) {
                                 <div style={{ fontWeight: 500 }}>
                                   {dp.count}
                                 </div>
-                                <div
-                                  style={{
-                                    fontSize: "0.8em",
-                                    color: "#666",
-                                  }}
-                                >
+                                <div style={{ fontSize: "0.8em", color: "#666" }}>
                                   ({dp.percentage}%)
                                 </div>
                               </>
                             ) : dp && dp.percentage !== undefined ? (
-                              // Fallback if only percentage is available
                               `${dp.percentage}%`
                             ) : (
                               "-"
@@ -500,7 +452,6 @@ export default function ReactChart(props) {
                 </Table>
               </TableContainer>
             </div>
-            {/* -------------------------------------- */}
           </>
         ) : (
           <Loader />

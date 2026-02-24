@@ -58,6 +58,14 @@ const translations = {
     presentation: "Presentation",
     chartType: "Chart Type",
     groups: "Groups",
+
+    //Report
+    en: {
+    happinessLevel: "Your Happiness Level",
+    downloadPDF: "Download PDF Report",
+    viewDetailedSummary: "Detailed Report Summary",
+  // ...
+},
   },
   hi: {
     // Navigation
@@ -120,6 +128,12 @@ const translations = {
     presentation: "प्रस्तुति",
     chartType: "चार्ट प्रकार",
     groups: "समूह",
+
+    //Report
+    happinessLevel: "आपका खुशी स्तर",
+    downloadPDF: "पीडीएफ रिपोर्ट डाउनलोड करें",
+    viewDetailedSummary: "विस्तृत रिपोर्ट सारांश",
+    //...
   },
 };
 

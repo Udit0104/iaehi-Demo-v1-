@@ -1,5 +1,3 @@
-// filepath: /c:/Users/uditv/OneDrive/Desktop/iaehi/backend/server.js
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -15,10 +13,8 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// In-memory store for OTPs (for demo; use DB/Redis for production)
 const otpStore = {};
 
-// OTP Send Endpoint
 app.post("/api/send-otp", async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: "Email is required" });
