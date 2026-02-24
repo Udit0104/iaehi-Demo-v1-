@@ -352,7 +352,7 @@ export default function ReactChart(props) {
         {/* ✅ Button placed at the top for better visibility */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px 20px' }}>
           <Button 
-            title={t.viewDetailedSummary || "Detailed Report Summary"} 
+            title={t.viewDetailedSummary || "HAPPINESS REPORT"} 
             onClick={() => navigate("/detailed-summary")} 
           />
         </div>
