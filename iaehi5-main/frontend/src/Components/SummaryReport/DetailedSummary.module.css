@@ -62,3 +62,108 @@ li {
 
 .pageFooter { margin-top: auto; text-align: center; color: #ccc; font-size: 0.8rem; border-top: 1px solid #eee; padding-top: 20px; }
 .actionButtons { display: flex; gap: 20px; margin-bottom: 30px; }
+
+/* ============================= */
+/* 📱 RESPONSIVE IMPROVEMENTS */
+/* ============================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+
+  .pdfPage {
+    padding: 50px 40px;
+    min-height: auto; /* remove strict A4 height on smaller screens */
+  }
+
+  .mainTitle {
+    font-size: 2.4rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+
+  .distributionGrid {
+    grid-template-columns: 1fr; /* stack cards */
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .pageWrapper {
+    padding: 15px;
+  }
+
+  .reportContainer {
+    max-width: 100%;
+  }
+
+  .pdfPage {
+    padding: 30px 20px;
+    box-shadow: none; /* remove heavy shadow for mobile */
+    border-radius: 12px;
+  }
+
+  .mainTitle {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+
+  .sectionTitle {
+    font-size: 1.4rem;
+  }
+
+  .writtenInsight {
+    padding: 20px;
+  }
+
+  .sampleSize {
+    font-size: 0.8rem;
+  }
+
+  /* Make tables scrollable on small screens */
+  .insightTable {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .insightTable th,
+  .insightTable td {
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+}
+
+
+/* Extra small devices */
+@media (max-width: 480px) {
+
+  .mainTitle {
+    font-size: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.2rem;
+  }
+
+  .writtenInsight {
+    padding: 15px;
+  }
+
+  .catPerc {
+    font-size: 1.4rem;
+  }
+
+}

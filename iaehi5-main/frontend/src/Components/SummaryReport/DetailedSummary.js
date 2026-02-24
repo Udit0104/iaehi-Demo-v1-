@@ -61,11 +61,18 @@ const DetailedSummary = () => {
       Number(((c * 100) / total).toFixed(1))
     );
 
-    const avgScore = (
-      data.reduce((acc, u) => acc + (u.score || 0), 0) / total
-    ).toFixed(1);
+    const rawAverage =
+      data.reduce((acc, u) => acc + (u.score || 0), 0) / total;
 
-    setOverallStats({ total, counts, percentages, avgScore });
+    // assuming max score is 180
+    const scaledAverage = Number(((rawAverage / 180) * 10).toFixed(1));
+
+    setOverallStats({
+      total,
+      counts,
+      percentages,
+      avgScore: scaledAverage,
+    });
   };
 
   /* ---------------- AGE BREAKDOWN ---------------- */
@@ -244,7 +251,7 @@ if (departmentBreakdowns.length > 0) {
     <div className={Style.pageWrapper}>
       <div className={Style.actionButtons} data-html2canvas-ignore="true">
         <Button title="← Back" onClick={() => navigate(-1)} />
-        <Button title="Download Professional PDF" onClick={downloadPDF} />
+        <Button title="Download Full Report" onClick={downloadPDF} />
       </div>
 
       <div ref={reportRef} className={Style.reportContainer}>
@@ -263,8 +270,30 @@ if (departmentBreakdowns.length > 0) {
                 <td>{overallStats.total}</td>
               </tr>
               <tr>
-                <td>Average Score</td>
-                <td>{overallStats.avgScore}</td>
+                <td>Average Happiness Level</td>
+                <td>
+                  <strong>{overallStats.avgScore} / 10</strong>
+                  <div style={{ fontSize: "0.75rem", color: "#777" }}>
+                    (Scaled from 0–10 assessment score)
+                    {overallStats.avgScore >= 7 && (
+                      <div style={{ color: "#2ecc71", fontWeight: 600 }}>
+                        High Organizational Wellbeing
+                      </div>
+                    )}
+
+                    {overallStats.avgScore >= 4 && overallStats.avgScore < 7 && (
+                      <div style={{ color: "#ffc815", fontWeight: 600 }}>
+                        Moderate Organizational Wellbeing
+                      </div>
+                    )}
+
+                    {overallStats.avgScore < 4 && (
+                      <div style={{ color: "#e74c3c", fontWeight: 600 }}>
+                        Immediate Intervention Required
+                      </div>
+                    )}
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
