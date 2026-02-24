@@ -806,7 +806,7 @@ export const questions = [
   {
     id: 53,
     category: 5,
-    que: "In the last 4 months, for many days your sleep time was more than 7 hours?",
+    que: "In the last 4 months, for how many days your sleep time was more than 7 hours?",
     queHindi: "पिछले 4 महीनों में, आप कितने दिन लगातार 7 घंटे या उससे ज्यादा सोए?",
     opta: "0-30 days",
     optaHindi: "0-30 दिन",
