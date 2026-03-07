@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.text}>
-          Copyright © 2025 IaeHi Technology - All Rights Reserved.
+          Copyright © 2025 HapScale Pvt. Ltd. - All Rights Reserved.
         </div>
       </div>
     </footer>
