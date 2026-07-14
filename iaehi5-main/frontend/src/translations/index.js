@@ -6,7 +6,7 @@ const translations = {
     summary: "Summary",
 
     // Main page
-    readyForQuiz: "Let’s begin. Just a few quick questions.", 
+    readyForQuiz: "Let’s begin. Just a few quick questions.",
     yesOfCourse: "Click here to start!",
     maybeNextTime: "Maybe next time?",
 
@@ -60,12 +60,10 @@ const translations = {
     groups: "Groups",
 
     //Report
-    en: {
     happinessLevel: "Your Happiness Level",
     downloadPDF: "Download PDF Report",
     viewDetailedSummary: "Detailed Report Summary",
-  // ...
-},
+    // ...
   },
   hi: {
     // Navigation
@@ -134,6 +132,134 @@ const translations = {
     downloadPDF: "पीडीएफ रिपोर्ट डाउनलोड करें",
     viewDetailedSummary: "विस्तृत रिपोर्ट सारांश",
     //...
+  },
+  de: {
+    // Navigation
+    leadersView: "Ansicht des Leiters",
+    home: "Startseite",
+    summary: "Zusammenfassung",
+
+    // Main page
+    readyForQuiz: "Lass uns beginnen. Nur ein paar kurze Fragen.",
+    yesOfCourse: "Hier klicken, um zu starten!",
+    maybeNextTime: "Vielleicht später?",
+
+    // Form labels
+    aboutYou: "Über dich",
+    name: "Name",
+    email: "E-Mail",
+    departments: "Abteilungen",
+    ageGroups: "Altersgruppen",
+    gender: "Geschlecht",
+    none: "Keine",
+
+    // Form validation
+    nameLengthError: "Der Name muss länger als 2 Zeichen sein",
+    invalidEmailError: "Ungültige E-Mail-Adresse",
+    alreadySubmitted: "Antworten wurden bereits mit dieser E-Mail-Adresse eingereicht!",
+
+    // Question page
+    submit: "SENDEN",
+    next: "WEITER",
+    loading: "Wird geladen...",
+    leaveConfirmation: "Beim Verlassen gehen die Daten verloren. Möchten Sie fortfahren?",
+
+    // Result page
+    thankYou: "Danke",
+    forYourTime: "für deine Zeit!",
+    veryHappyMessage: "Du bist glücklich! Mach weiter so ",
+    lessHappyMessage: "Du bist nur wenige Punkte vom Glück entfernt ",
+    backToHome: "Zur Startseite",
+    happyWithResult: "Bist du mit unserem Ergebnis zufrieden?",
+    yes: "Ja",
+    no: "Nein",
+    feedbackThanks: "Vielen Dank für dein Feedback!",
+
+    // Next time
+    seeYouSoon: "Bis bald!",
+
+    // Errors
+    somethingWentWrong: "Etwas ist schiefgelaufen! Bitte gehe zu",
+    adminOnlyView: "Diese Ansicht ist nur für Administratoren verfügbar.",
+    networkError: "Netzwerkfehler. Bitte versuche es später erneut.",
+
+    // Chart
+    overall: "Gesamt",
+    departments: "Abteilungen",
+    ageGroups: "Altersgruppen",
+    gender: "Geschlecht",
+    presentation: "Präsentation",
+    chartType: "Diagrammtyp",
+    groups: "Gruppen",
+
+    // Report
+    happinessLevel: "Dein Glücksniveau",
+    downloadPDF: "PDF-Bericht herunterladen",
+    viewDetailedSummary: "Detaillierte Berichtszusammenfassung",
+  },
+  fr: {
+    // Navigation
+    leadersView: "Vue du responsable",
+    home: "Accueil",
+    summary: "Résumé",
+
+    // Main page
+    readyForQuiz: "Commençons. Quelques questions rapides.",
+    yesOfCourse: "Cliquez ici pour commencer !",
+    maybeNextTime: "Peut-être une autre fois ?",
+
+    // Form labels
+    aboutYou: "À propos de vous",
+    name: "Nom",
+    email: "E-mail",
+    departments: "Départements",
+    ageGroups: "Groupes d'âge",
+    gender: "Genre",
+    none: "Aucun",
+
+    // Validation
+    nameLengthError: "Le nom doit contenir plus de 2 caractères",
+    invalidEmailError: "Adresse e-mail invalide",
+    alreadySubmitted: "Les réponses ont déjà été envoyées avec cette adresse e-mail !",
+
+    // Question page
+    submit: "SOUMETTRE",
+    next: "SUIVANT",
+    loading: "Chargement...",
+    leaveConfirmation: "Les données seront perdues si vous quittez cette page. Continuer ?",
+
+    // Result page
+    thankYou: "Merci",
+    forYourTime: "pour votre temps !",
+    veryHappyMessage: "Vous êtes heureux ! Continuez ainsi 😊",
+    lessHappyMessage: "Vous êtes à quelques points du bonheur 😊",
+    backToHome: "Retour à l'accueil",
+    happyWithResult: "Êtes-vous satisfait de notre résultat ?",
+    yes: "Oui",
+    no: "Non",
+    feedbackThanks: "Merci pour votre retour !",
+
+    // Next time
+    seeYouSoon: "À bientôt !",
+
+    // Errors
+    somethingWentWrong: "Une erreur est survenue ! Veuillez revenir à",
+    adminOnlyView: "Cette vue est réservée aux administrateurs.",
+    networkError: "Erreur réseau. Veuillez réessayer plus tard.",
+
+    // Chart
+    overall: "Global",
+    departments: "Départements",
+    ageGroups: "Groupes d'âge",
+    gender: "Genre",
+    presentation: "Présentation",
+    chartType: "Type de graphique",
+    groups: "Groupes",
+
+    // Report
+    happinessLevel: "Votre niveau de bonheur",
+    downloadPDF: "Télécharger le rapport PDF",
+    viewDetailedSummary: "Résumé détaillé du rapport",
   },
 };
 

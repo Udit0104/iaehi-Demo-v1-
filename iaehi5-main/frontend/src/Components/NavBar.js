@@ -27,7 +27,7 @@ function appBarLabel(agree, adminClickHandle, logoutHandle, msg, navigate, t) {
         <img className={Style.logo} src={logo} alt="iaeHi" />
       </Typography>
 
-      {/* <LanguageToggle /> */}
+      {/*<LanguageToggle /> */}
 
       {msg &&
         (sessionStorage.getItem("admin") !== "1" ? (

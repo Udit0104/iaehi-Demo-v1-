@@ -51,6 +51,21 @@ const LanguageToggle = () => {
         >
           हिंदी
         </Button>
+        <Button
+          onClick={() => changeLanguage("de")}
+          variant={language === "de" ? "contained" : "outlined"}
+          sx={{
+            bgcolor: language === "de" ? "#ffc815" : "transparent",
+            color: language === "de" ? "black" : "#ffc815",
+            borderColor: "#ffc815",
+            "&:hover": {
+              bgcolor:
+                language === "de" ? "#e5b413" : "rgba(255, 200, 21, 0.1)",
+            },
+          }}
+        >
+          Deutsch
+        </Button>
       </ButtonGroup>
     </ThemeProvider>
   );
